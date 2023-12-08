@@ -1,7 +1,7 @@
 import express from 'express';
 import HttpError from './middleware/http-errors.js';
 import connectDB from './middleware/db.js';
-import Files from './models/FileSharing.js';
+import router from './routes/files-routes.js';
 
 connectDB();
 
@@ -23,7 +23,7 @@ app.use((request, response, next) => {
 
 app.use(express.json());
 
-// app.use('/api/files', 'routes here')
+app.use('/api/files', router);
 
 app.use((request, response, next) => {
 	const error = new HttpError('We cannot find this route', 404);
