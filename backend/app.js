@@ -26,8 +26,7 @@ app.use(express.json());
 app.use('/api/files', router);
 
 app.use((request, response, next) => {
-	const error = new HttpError('We cannot find this route', 404);
-	next();
+	response.status(404).json({ message: 'Cannot find this endpoint' });
 });
 
 export default app;
