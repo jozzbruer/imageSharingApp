@@ -2,7 +2,7 @@ import validator from 'express-validator';
 import mongoose from 'mongoose';
 import express from 'express';
 import HttpError from '../middleware/http-errors.js';
-import Files from '../models/FileSharing.js';
+import Files from '../models/fileSharing.js';
 
 export const getAllImages = (request, response, next) => {
 	response.status(201).json({ message: 'get Route is working' });

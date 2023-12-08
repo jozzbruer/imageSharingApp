@@ -4,7 +4,7 @@ import {
 	deleteImages,
 	getAllImages,
 	uploadImages,
-} from '../controllers/files-controllers.js';
+} from '../controllers/filesControllers.js';
 
 const router = Router();
 

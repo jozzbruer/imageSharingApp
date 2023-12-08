@@ -1,7 +1,7 @@
 import express from 'express';
 import HttpError from './middleware/http-errors.js';
 import connectDB from './middleware/db.js';
-import router from './routes/files-routes.js';
+import router from './routes/filesRoutes.js';
 
 connectDB();
 
