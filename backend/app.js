@@ -1,5 +1,4 @@
 import express from 'express';
-import HttpError from './middleware/http-errors.js';
 import connectDB from './middleware/db.js';
 import router from './routes/filesRoutes.js';
 
@@ -20,7 +19,7 @@ app.use((request, response, next) => {
 	);
 	next();
 });
-
+// Parsing Json to body
 app.use(express.json());
 
 app.use('/api/files', router);

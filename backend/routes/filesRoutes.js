@@ -8,7 +8,7 @@ import {
 import { uploadFiles } from '../middleware/fileUpload.js';
 
 const router = Router();
-
+//Routes
 router.get('/', getAllImages);
 router.post(
 	'/upload',
