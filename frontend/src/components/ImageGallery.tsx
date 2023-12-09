@@ -3,7 +3,7 @@ import React from 'react';
 import ImageCard from './ImageCard';
 
 interface ImageGalleryProps {
-	images: Array<{ id: number; name: string; imagePath: string }>;
+	images: Array<{ _id: number; name: string; imagePath: string }>;
 }
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 	return (
@@ -12,9 +12,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 			spacing={2}>
 			{images.map((image) => (
 				<Grid
-					key={image.id}
+					key={image._id}
 					item
-					rowGap={5}
 					xs={12}
 					sm={6}
 					md={6}>

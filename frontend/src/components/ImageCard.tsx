@@ -5,6 +5,8 @@ interface ImageCardProps {
 	name: string;
 	imagePath: string;
 }
+
+const baseURL = 'http://localhost:3001/';
 const ImageCard: React.FC<ImageCardProps> = ({ name, imagePath }) => {
 	return (
 		<Card>
@@ -12,7 +14,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, imagePath }) => {
 				component='img'
 				height='300'
 				width='300'
-				image={imagePath}
+				image={`${baseURL}${imagePath}`}
 				alt={name}
 			/>
 			<CardContent>
