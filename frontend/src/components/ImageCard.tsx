@@ -1,11 +1,13 @@
 import { MoreVertOutlined } from '@mui/icons-material';
 import {
+	Alert,
 	Card,
 	CardContent,
 	CardMedia,
 	IconButton,
 	Menu,
 	MenuItem,
+	Snackbar,
 	Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
@@ -22,17 +24,26 @@ const ImageCard: React.FC<ImageCardProps> = ({ id, name, imagePath }) => {
 	const deleteItem = useDeleteItem();
 
 	const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
+	const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorElement(event.currentTarget);
 	};
 
-	const handleClose = () => {
+	const handleCloseAnchor = () => {
 		setAnchorElement(null);
 	};
 	const handleDeleteFile = () => {
 		deleteItem.mutate(id);
+		setIsSuccess(true);
 		//handleClose();
+	};
+
+	const handleCloseSuccess = (event?: React.SyntheticEvent | Event, reason?: string) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setIsSuccess(false);
 	};
 	return (
 		<Card>
@@ -57,10 +68,23 @@ const ImageCard: React.FC<ImageCardProps> = ({ id, name, imagePath }) => {
 					anchorEl={anchorElement}
 					keepMounted
 					open={Boolean(anchorElement)}
-					onClose={handleClose}>
+					onClose={handleCloseAnchor}>
 					<MenuItem onClick={handleDeleteFile}>Delete</MenuItem>
 				</Menu>
 			</CardContent>
+			<div>
+				<Snackbar
+					open={isSuccess}
+					autoHideDuration={6000}
+					onClose={handleCloseSuccess}>
+					<Alert
+						onClose={handleCloseSuccess}
+						severity='success'
+						sx={{ width: '100%' }}>
+						Image Deleted
+					</Alert>
+				</Snackbar>
+			</div>
 		</Card>
 	);
 };

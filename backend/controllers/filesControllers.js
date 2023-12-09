@@ -12,6 +12,20 @@ export const getAllImages = async (request, response, next) => {
 	}
 };
 
+export const searchImageByName = async (request, response, next) => {
+	const { q } = request.query;
+
+	if (!q) {
+		return response.status(400).json({ error: 'Cannot find the query params' });
+	}
+	try {
+		const filteredImage = await Files.find({ name: { $regex: new RegExp(q, 'i') } });
+		response.status(200).json(filteredImage);
+	} catch (error) {
+		response.status(500).json({ error });
+	}
+};
+
 export const uploadImages = async (request, response, next) => {
 	const currentDate = getFormattedDate();
 	const validationErrors = validator.validationResult(request);
@@ -46,8 +60,6 @@ export const deleteImages = async (request, response, next) => {
 			response.status(201).json({ image });
 		} else response.status(404).json({ message: 'Not exist' });
 	} catch (error) {
-		response
-			.status(404)
-			.json({ message: 'An error has occured while deleting this file' });
+		response.status(404).json({ message: 'An error has occured while deleting this file' });
 	}
 };

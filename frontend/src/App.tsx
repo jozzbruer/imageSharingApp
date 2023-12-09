@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Box, CircularProgress, Container, TextField, Typography } from '@mui/material';
 import ImageGallery from './components/ImageGallery';
 import { useFetchData } from './hooks/useFetch';
 import ImageUploader from './components/ImageUploader';
+import { useSearchQuery } from './hooks/useSearchQuery';
 
 const App: React.FC = () => {
-	const { data, isLoading, isError } = useFetchData();
+	const [searchQuery, setSearchQuery] = useState<string>('');
+	const { data: allData, isLoading: allDataLoading, isError: allDataError } = useFetchData();
+	const {
+		data: searchData,
+		isLoading: searchDataLoading,
+		isError: searchDataError,
+	} = useSearchQuery(searchQuery);
+
+	const handleSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const search = encodeURIComponent(e.target.value);
+		setSearchQuery(search);
+	};
 
 	return (
 		<Container>
@@ -16,26 +28,41 @@ const App: React.FC = () => {
 					sx={{ width: '60%' }}
 					variant='outlined'
 					margin='normal'
+					value={searchQuery}
+					onChange={handleSearchQuery}
 				/>
 				<ImageUploader />
 			</Box>
-			{isError ? (
+			{allDataError || searchDataError ? (
 				<div>Error fetching the data</div>
 			) : (
 				<>
 					{' '}
-					{isLoading ? (
+					{allDataLoading || searchDataLoading ? (
 						<Box sx={{ marginBottom: '30px', textAlign: 'center' }}>
 							<CircularProgress />
 						</Box>
 					) : (
 						<>
 							<Box sx={{ marginBottom: '30px' }}>
-								<Typography variant='h3'>
-									{data.length === 0 ? 'No' : data.length} {data.length === 1 ? 'image' : 'images'}{' '}
-								</Typography>
+								{searchQuery ? (
+									<Typography variant='h3'>
+										{searchData.length === 0 ? 'No' : searchData.length}{' '}
+										{searchData.length === 1 ? 'image' : 'images'}{' '}
+									</Typography>
+								) : (
+									<Typography variant='h3'>
+										{allData.length === 0 ? 'No' : allData.length}{' '}
+										{allData.length === 1 ? 'image' : 'images'}{' '}
+									</Typography>
+								)}
 							</Box>
-							<ImageGallery images={data} />
+
+							{searchQuery ? (
+								<ImageGallery images={searchData} />
+							) : (
+								<ImageGallery images={allData} />
+							)}
 						</>
 					)}
 				</>
