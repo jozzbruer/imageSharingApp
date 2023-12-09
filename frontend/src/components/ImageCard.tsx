@@ -9,14 +9,18 @@ import {
 	Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
+import { useDeleteItem } from '../hooks/useDeleteItem';
 
 interface ImageCardProps {
+	id: string;
 	name: string;
 	imagePath: string;
 }
 
 const baseURL = 'http://localhost:3001/';
-const ImageCard: React.FC<ImageCardProps> = ({ name, imagePath }) => {
+const ImageCard: React.FC<ImageCardProps> = ({ id, name, imagePath }) => {
+	const deleteItem = useDeleteItem();
+
 	const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,6 +29,10 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, imagePath }) => {
 
 	const handleClose = () => {
 		setAnchorElement(null);
+	};
+	const handleDeleteFile = () => {
+		deleteItem.mutate(id);
+		//handleClose();
 	};
 	return (
 		<Card>
@@ -50,7 +58,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, imagePath }) => {
 					keepMounted
 					open={Boolean(anchorElement)}
 					onClose={handleClose}>
-					<MenuItem>Delete</MenuItem>
+					<MenuItem onClick={handleDeleteFile}>Delete</MenuItem>
 				</Menu>
 			</CardContent>
 		</Card>

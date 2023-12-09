@@ -1,10 +1,11 @@
-import { Button } from '@mui/material';
+import { Alert, Button, Snackbar } from '@mui/material';
 import React, { useState } from 'react';
 import { useImageUpload } from '../hooks/useImageUpload';
 
 const ImageUploader: React.FC = () => {
 	const [file, setFile] = useState<File | null>(null);
 	const [filename, setFilename] = useState<string>('');
+	const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
 	const { uploadImage, isLoading, isError } = useImageUpload();
 
@@ -22,6 +23,7 @@ const ImageUploader: React.FC = () => {
 		if (file && filename) {
 			try {
 				await uploadImage(file, filename);
+				setIsSuccess(true);
 				setTimeout(() => {
 					setFile(null);
 					setFilename('');
@@ -30,6 +32,17 @@ const ImageUploader: React.FC = () => {
 				console.log(error);
 			}
 		}
+	};
+	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+	};
+	const handleCloseSuccess = (event?: React.SyntheticEvent | Event, reason?: string) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setIsSuccess(false);
 	};
 
 	return (
@@ -40,7 +53,7 @@ const ImageUploader: React.FC = () => {
 					variant='contained'
 					color='primary'
 					component='label'>
-					Upload
+					Select
 					<input
 						onChange={handleSelectFile}
 						type='file'
@@ -59,7 +72,30 @@ const ImageUploader: React.FC = () => {
 					{isLoading ? 'Uploading...' : 'Upload'}
 				</Button>
 			)}
-			<div>{isError && <p style={{ color: 'red' }}>Error uploading image</p>}</div>
+			<div>
+				<Snackbar
+					open={isError}
+					autoHideDuration={3000}
+					onClose={handleClose}>
+					<Alert
+						onClose={handleClose}
+						severity='error'
+						sx={{ width: '100%' }}>
+						Failed to upload image
+					</Alert>
+				</Snackbar>
+				<Snackbar
+					open={isSuccess}
+					autoHideDuration={6000}
+					onClose={handleCloseSuccess}>
+					<Alert
+						onClose={handleCloseSuccess}
+						severity='success'
+						sx={{ width: '100%' }}>
+						Image Uploaded
+					</Alert>
+				</Snackbar>
+			</div>
 		</>
 	);
 };

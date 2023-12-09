@@ -3,7 +3,7 @@ import React from 'react';
 import ImageCard from './ImageCard';
 
 interface ImageGalleryProps {
-	images: Array<{ _id: number; name: string; imagePath: string }>;
+	images: Array<{ _id: string; name: string; imagePath: string }>;
 }
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 	return (
@@ -18,6 +18,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 					sm={6}
 					md={6}>
 					<ImageCard
+						id={image._id}
 						name={image.name}
 						imagePath={image.imagePath}
 					/>
