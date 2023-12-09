@@ -5,12 +5,14 @@ import {
 	getAllImages,
 	uploadImages,
 } from '../controllers/filesControllers.js';
+import { uploadFiles } from '../middleware/fileUpload.js';
 
 const router = Router();
 
 router.get('/', getAllImages);
 router.post(
 	'/upload',
+	uploadFiles.single('imagePath'),
 	[
 		validator.check('name').notEmpty(),
 		validator.check('name').isLength({ min: 3 }),

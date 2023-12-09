@@ -27,7 +27,7 @@ export const uploadImages = async (request, response, next) => {
 
 	const uploadImage = new Files({
 		name,
-		imagePath: 'random/path/test',
+		imagePath: request.file.path,
 		date: currentDate,
 	});
 
