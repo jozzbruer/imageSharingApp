@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import { Box, Button, CircularProgress, Container, TextField, Typography } from '@mui/material';
+import { Box, CircularProgress, Container, TextField, Typography } from '@mui/material';
 import ImageGallery from './components/ImageGallery';
 import { useFetchData } from './hooks/useFetch';
+import ImageUploader from './components/ImageUploader';
 
 const App: React.FC = () => {
 	const { data, isLoading, isError } = useFetchData();
@@ -16,17 +17,7 @@ const App: React.FC = () => {
 					variant='outlined'
 					margin='normal'
 				/>
-				<Button
-					sx={{ marginTop: '15px', marginBottom: '10px' }}
-					variant='contained'
-					color='primary'
-					component='label'>
-					Upload
-					<input
-						type='file'
-						hidden
-					/>
-				</Button>
+				<ImageUploader />
 			</Box>
 			{isError ? (
 				<div>Error fetching the data</div>
