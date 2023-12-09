@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import React from 'react';
+import ImageCard from './ImageCard';
 
 interface ImageGalleryProps {
 	images: Array<{ id: number; name: string; imagePath: string }>;
@@ -13,10 +14,14 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 				<Grid
 					key={image.id}
 					item
+					rowGap={5}
 					xs={12}
 					sm={6}
-					md={4}>
-					Image here
+					md={6}>
+					<ImageCard
+						name={image.name}
+						imagePath={image.imagePath}
+					/>
 				</Grid>
 			))}
 		</Grid>
