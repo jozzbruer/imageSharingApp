@@ -1,6 +1,8 @@
 import validator from 'express-validator';
+import fs from 'fs/promises';
 import Files from '../models/fileSharing.js';
 import { getFormattedDate } from '../utils/formattedDate.js';
+import { error } from 'console';
 
 export const getAllImages = async (request, response, next) => {
 	try {
@@ -40,8 +42,10 @@ export const deleteImages = async (request, response, next) => {
 	const id = request.params.id;
 	try {
 		const image = await Files.findByIdAndDelete(id);
-		if (image) response.status(201).json({ image });
-		else response.status(404).json({ message: 'Not exist' });
+		if (image) {
+			await fs.unlink(image.imagePath);
+			response.status(201).json({ image });
+		} else response.status(404).json({ message: 'Not exist' });
 	} catch (error) {
 		response
 			.status(404)
