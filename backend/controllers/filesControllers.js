@@ -39,6 +39,15 @@ export const uploadImages = async (request, response, next) => {
 	}
 };
 
-export const deleteImages = (request, response, next) => {
-	response.status(200).json({ message: 'Delete Route is working' });
+export const deleteImages = async (request, response, next) => {
+	const id = request.params.id;
+	try {
+		const image = await Files.findByIdAndDelete(id);
+		if (image) response.status(201).json({ image });
+		else response.status(404).json({ message: 'Not exist' });
+	} catch (error) {
+		response
+			.status(404)
+			.json({ message: 'An error has occured while deleting this file' });
+	}
 };
