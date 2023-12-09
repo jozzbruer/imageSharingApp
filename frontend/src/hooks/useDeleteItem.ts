@@ -16,6 +16,7 @@ export const useDeleteItem = () => {
 	const mutation = useMutation(deletItem, {
 		onSuccess: () => {
 			queryClient.invalidateQueries('myImages');
+			queryClient.invalidateQueries('searchData'); // In case i deleted searched data
 		},
 	});
 	return mutation;

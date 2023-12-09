@@ -45,7 +45,7 @@ const App: React.FC = () => {
 					) : (
 						<>
 							<Box sx={{ marginBottom: '30px' }}>
-								{searchQuery ? (
+								{searchQuery ? ( // Render if we searching data or not
 									<Typography variant='h3'>
 										{searchData.length === 0 ? 'No' : searchData.length}{' '}
 										{searchData.length === 1 ? 'image' : 'images'}{' '}
@@ -58,7 +58,7 @@ const App: React.FC = () => {
 								)}
 							</Box>
 
-							{searchQuery ? (
+							{searchQuery ? ( // Render if we searching data or not
 								<ImageGallery images={searchData} />
 							) : (
 								<ImageGallery images={allData} />
