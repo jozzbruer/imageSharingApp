@@ -11,6 +11,12 @@ export const getAllImages = (request, response, next) => {
 
 export const uploadImages = async (request, response, next) => {
 	const currentDate = getFormattedDate();
+	const validationErrors = validator.validationResult(request);
+
+	if (!validationErrors.isEmpty()) {
+		response.status(400).json({ message: 'Invalid Input' });
+		return;
+	}
 
 	const { name } = request.body;
 
