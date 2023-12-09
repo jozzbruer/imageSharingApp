@@ -2,7 +2,6 @@ import validator from 'express-validator';
 import fs from 'fs/promises';
 import Files from '../models/fileSharing.js';
 import { getFormattedDate } from '../utils/formattedDate.js';
-import { error } from 'console';
 
 export const getAllImages = async (request, response, next) => {
 	try {
