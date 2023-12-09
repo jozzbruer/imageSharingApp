@@ -5,8 +5,13 @@ import HttpError from '../middleware/http-errors.js';
 import Files from '../models/fileSharing.js';
 import { getFormattedDate } from '../utils/formattedDate.js';
 
-export const getAllImages = (request, response, next) => {
-	response.status(201).json({ message: 'get Route is working' });
+export const getAllImages = async (request, response, next) => {
+	try {
+		const data = await Files.find();
+		response.status(201).json({ data });
+	} catch (error) {
+		response.status(404).json({ error });
+	}
 };
 
 export const uploadImages = async (request, response, next) => {

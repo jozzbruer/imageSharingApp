@@ -5,5 +5,5 @@ export const getFormattedDate = () => {
 	const month = date.getMonth() + 1;
 	const year = date.getFullYear();
 
-	return `${month}/${day}/${year}`;
+	return `${month}-${day}-${year}`;
 };
