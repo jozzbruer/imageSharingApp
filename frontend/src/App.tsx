@@ -32,7 +32,7 @@ const App: React.FC = () => {
 						<>
 							<Box sx={{ marginBottom: '30px' }}>
 								<Typography variant='h3'>
-									{data.length} {`${data.length === 1}` ? 'image' : 'images'}{' '}
+									{data.length} {data.length === 1 ? 'image' : 'images'}{' '}
 								</Typography>
 							</Box>
 							<ImageGallery images={data} />
